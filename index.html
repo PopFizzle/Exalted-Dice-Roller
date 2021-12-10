@@ -22,9 +22,26 @@
 	//
 	// Adding a comment to test commit
 	// ===================================================================================
-
-	function full_pool_atk_check_push() { window.document.form_1.flurry_atk_check.checked = false; }
-	function flurry_atk_check_push() { window.document.form_1.full_pool_atk_check.checked = false; }
+	// User / YYYY-MM-DD / Description
+	// ===================================================================================
+	// Vince / 2021-12-10 / Added a checkbox to allow for a single attack that does 2 damage rolls
+	//						This is used for Infinite Jade Chakrams and Cloudsplitter Chakrams
+	// ===================================================================================
+	
+	// Toggle the radio buttons based on what is selected
+	function full_pool_atk_check_push() {
+		window.document.form_1.flurry_atk_check.checked = false;
+		window.document.form_1.double_chak_atk_check.checked = false;
+	}
+	function flurry_atk_check_push() {
+		window.document.form_1.full_pool_atk_check.checked = false;
+		window.document.form_1.double_chak_atk_check.checked = false;
+	}
+	// If making an single attack with two rolls for damage with a special Chakram
+	function double_chak_atk_check_push() {
+		window.document.form_1.flurry_atk_check.checked = false;
+		window.document.form_1.full_pool_atk_check.checked = true;
+	 }
 
 	function Rollem(nameform) {
 
@@ -53,6 +70,7 @@
 		onslaught = 0;
 		double=1;
 		one = 0;
+		double_chak_dmg = 0;
 		var i;
 		var j;
 		var d;
@@ -63,6 +81,7 @@
 		if (nameform.zeroes.checked==true) double = 2;
 		if (nameform.subtract.checked==true) one = 1;
 		if (nameform.onslaught.checked==true) onslaught = 1;
+		if (nameform.double_chk_atk.checked==true) double_chak_dmg = 1;
 
 		// Work through the number of attack actions
 		for (j=0;j<actions;j++){
@@ -128,7 +147,7 @@
 			atkdisplay+="\n";
 
 			
-			// Compute the damage
+			// Determine what the DAMAGE POOL is based on ATK successes, weapon damage minus soak
 			if (successes_less_dv > 0) {
 				dmgpool=Number(successes_less_dv)+Number(wpndmg)-Number(targsoak);
 				
@@ -470,7 +489,7 @@ Onslaught Penalty
 
 <p>
 
-<!-- <input type=radio name ="doublechak_atk_check" onClick="double_atk_check_push();"> Double Chakram ATK -->
+<input type=radio name ="double_chak_atk_check" onClick="double_chak_atk_check_push();"> Double Chakram ATK
 <input type=radio name ="flurry_atk_check" onClick="flurry_atk_check_push();" checked> Flurry Attack
 <input type=radio name ="full_pool_atk_check" onClick="full_pool_atk_check_push();"> Full Pool Attack
 
